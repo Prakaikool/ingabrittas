@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
 import { ImageWithFallback } from './components/ImageWithFallback';
-import { Package, Info, Mail, Phone, MapPin, Menu, X } from 'lucide-react';
+import { Package, Info, Mail, Phone, MapPin, Menu, X, ArrowRight } from 'lucide-react';
 
 function FacebookIcon({ className }) {
   return (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
       <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
     </svg>
   );
@@ -13,377 +13,424 @@ function FacebookIcon({ className }) {
 
 function InstagramIcon({ className }) {
   return (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
       <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
     </svg>
   );
 }
 
 const navLinks = [
-  { href: '#home',     label: 'Hem' },
-  { href: '#om-oss',  label: 'Om Oss' },
-  { href: '#produkter', label: 'Produkter' },
-  { href: '#tipsar',  label: 'Tipsar' },
-  { href: '#contact', label: 'Kontakt' },
+  { href: '#home',      label: 'Hem' },
+  { href: '#om-oss',   label: 'Om Oss' },
+  { href: '#produkter',label: 'Produkter' },
+  { href: '#tipsar',   label: 'Tipsar' },
+  { href: '#contact',  label: 'Kontakt' },
 ];
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-stone-50">
-      {/* Top accent bar */}
-      <div className="h-1.5 bg-gradient-to-r from-rose-800 via-rose-500 to-rose-800" />
+    <div className="min-h-screen bg-stone-50 overflow-x-hidden">
 
-      {/* ── Header ────────────────────────────────────── */}
-      <header className="bg-white sticky top-0 z-50 shadow-sm border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ── Navbar ────────────────────────────────────── */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-stone-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
-
-            {/* Logo */}
             <a href="#home" className="flex flex-col leading-none">
-              <span className="text-rose-950 font-bold text-lg sm:text-xl" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <span className="text-rose-950 font-bold text-lg sm:text-2xl" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Inga-Brittas
               </span>
-              <span className="text-rose-700 text-xs sm:text-sm tracking-widest uppercase font-semibold">
+              <span className="text-rose-600 text-[10px] sm:text-xs tracking-[0.25em] uppercase font-bold">
                 Havrebollar
               </span>
             </a>
-
-            {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+            <nav className="hidden md:flex items-center gap-7 lg:gap-9">
               {navLinks.map(({ href, label }) => (
-                <a
-                  key={href}
-                  href={href}
-                  className="text-sm lg:text-base text-rose-950 font-semibold hover:text-rose-700 transition-colors"
-                >
+                <a key={href} href={href}
+                  className="text-sm font-semibold text-stone-600 hover:text-rose-800 transition-colors tracking-wide">
                   {label}
                 </a>
               ))}
-              <a
-                href="#contact"
-                className="ml-2 bg-rose-800 hover:bg-rose-900 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors shadow"
-              >
-                Beställ nu
-              </a>
             </nav>
-
-            {/* Mobile hamburger */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden p-2 text-rose-950 rounded-lg hover:bg-rose-50 transition-colors"
-              aria-label="Meny"
-            >
+            <a href="#contact"
+              className="hidden md:flex items-center gap-2 bg-rose-800 hover:bg-rose-900 text-white text-sm font-bold px-5 py-2.5 rounded-full transition-all hover:scale-105 shadow-md">
+              Beställ <ArrowRight className="w-4 h-4" />
+            </a>
+            <button onClick={() => setMenuOpen(!menuOpen)}
+              className="md:hidden p-2 text-rose-950 rounded-lg hover:bg-rose-50 transition-colors">
               {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
-
-        {/* Mobile dropdown */}
         {menuOpen && (
-          <div className="md:hidden border-t border-stone-200 bg-white px-4 pb-4 pt-2">
+          <div className="md:hidden border-t border-stone-100 bg-white px-5 pb-5 pt-3">
             {navLinks.map(({ href, label }) => (
-              <a
-                key={href}
-                href={href}
-                onClick={() => setMenuOpen(false)}
-                className="block py-3 text-base font-semibold text-rose-950 hover:text-rose-700 border-b border-stone-100 last:border-0 transition-colors"
-              >
-                {label}
+              <a key={href} href={href} onClick={() => setMenuOpen(false)}
+                className="flex items-center justify-between py-3.5 text-base font-semibold text-stone-700 hover:text-rose-800 border-b border-stone-100 last:border-0 transition-colors">
+                {label} <ArrowRight className="w-4 h-4 text-stone-300" />
               </a>
             ))}
-            <a
-              href="#contact"
-              onClick={() => setMenuOpen(false)}
-              className="mt-4 block text-center bg-rose-800 hover:bg-rose-900 text-white font-semibold px-5 py-3 rounded-full transition-colors"
-            >
-              Beställ nu
+            <a href="#contact" onClick={() => setMenuOpen(false)}
+              className="mt-4 flex items-center justify-center gap-2 bg-rose-800 text-white font-bold px-5 py-3.5 rounded-full">
+              Beställ nu <ArrowRight className="w-4 h-4" />
             </a>
           </div>
         )}
       </header>
 
       {/* ── Hero ──────────────────────────────────────── */}
-      <section id="home" className="bg-white py-14 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <section id="home" className="relative min-h-screen bg-white flex items-center pt-16 sm:pt-20 overflow-hidden">
 
+        {/* Large decorative circle */}
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] sm:w-[700px] sm:h-[700px] bg-rose-50 rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 -left-20 w-64 h-64 bg-amber-50 rounded-full pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-24 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+
+            {/* Text */}
             <div className="space-y-6 sm:space-y-8 order-2 lg:order-1">
-              <div className="space-y-3 sm:space-y-4">
-                <span className="inline-block px-4 py-1.5 bg-rose-800 text-white text-xs sm:text-sm rounded-full font-semibold tracking-wide">
-                  Sedan 1976
-                </span>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl text-rose-950 leading-tight">
-                  Traditionella<br />
-                  <span className="italic text-rose-800" style={{ fontFamily: "'Great Vibes', cursive", fontSize: '1.15em' }}>
-                    Havrebollar
-                  </span>
-                </h1>
-                <div className="w-20 h-1 bg-rose-800" />
+              <div className="inline-flex items-center gap-2 bg-rose-100 text-rose-800 text-xs sm:text-sm font-bold px-4 py-2 rounded-full tracking-widest uppercase">
+                <span className="w-2 h-2 bg-rose-600 rounded-full" />
+                Sedan 1976 · Hägersten
               </div>
 
-              <p className="text-base sm:text-lg text-stone-700 leading-relaxed max-w-lg">
-                I mer än 45 år har Inga-Brittas havrebollar varit en älskad klassiker.
-                Gjorda med kärlek och det anrika receptet —{' '}
-                <em>de smälter som choklad i munnen</em>.
+              <div className="space-y-2">
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-rose-950 leading-[1.05] tracking-tight"
+                  style={{ fontFamily: "'Playfair Display', serif" }}>
+                  Traditionella
+                </h1>
+                <h1 className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl text-rose-700 leading-[0.95]"
+                  style={{ fontFamily: "'Great Vibes', cursive" }}>
+                  Havrebollar
+                </h1>
+              </div>
+
+              <p className="text-base sm:text-lg lg:text-xl text-stone-500 leading-relaxed max-w-md">
+                Handgjorda med kärlek i 45 år. De smälter som choklad i
+                munnen — det godaste fika-tillbehöret i hela Stockholm.
               </p>
 
-              <div className="flex flex-wrap gap-3 sm:gap-4">
-                <a
-                  href="#produkter"
-                  className="bg-rose-800 hover:bg-rose-900 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all hover:scale-105 shadow-lg"
-                >
+              <div className="flex flex-wrap gap-3 sm:gap-4 pt-2">
+                <a href="#produkter"
+                  className="group flex items-center gap-2 bg-rose-800 hover:bg-rose-900 text-white font-bold px-7 sm:px-9 py-4 rounded-full text-sm sm:text-base transition-all hover:scale-105 shadow-xl shadow-rose-200">
                   Se produkter
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
-                <a
-                  href="#contact"
-                  className="border-2 border-rose-800 text-rose-900 hover:bg-rose-800 hover:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base font-semibold transition-all"
-                >
+                <a href="#contact"
+                  className="flex items-center gap-2 border-2 border-stone-300 hover:border-rose-800 text-stone-700 hover:text-rose-900 font-bold px-7 sm:px-9 py-4 rounded-full text-sm sm:text-base transition-all">
                   Kontakta oss
                 </a>
               </div>
+
+              {/* Quick stats */}
+              <div className="flex gap-6 sm:gap-10 pt-4 border-t border-stone-100">
+                {[['45+', 'År'], ['100%', 'Handgjorda'], ['5', 'Ingredienser']].map(([n, l]) => (
+                  <div key={l}>
+                    <p className="text-2xl sm:text-3xl font-black text-rose-800" style={{ fontFamily: "'Playfair Display', serif" }}>{n}</p>
+                    <p className="text-xs sm:text-sm text-stone-500 font-medium">{l}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="order-1 lg:order-2 relative">
-              <div className="absolute -top-6 -right-6 w-24 sm:w-32 h-24 sm:h-32 border-4 border-rose-200 rounded-full pointer-events-none" />
-              <div className="absolute -bottom-6 -left-6 w-16 sm:w-24 h-16 sm:h-24 border-4 border-rose-200 rounded-full pointer-events-none" />
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1602585491686-ef2b2d3ec08e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
-                alt="Inga-Brittas Havrebollar"
-                className="w-full rounded-3xl shadow-2xl relative z-10 hover:scale-[1.02] transition-transform duration-500"
-              />
+            {/* Image */}
+            <div className="order-1 lg:order-2 relative flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-full">
+                {/* Offset accent block */}
+                <div className="absolute inset-0 translate-x-4 translate-y-4 sm:translate-x-6 sm:translate-y-6 bg-rose-800 rounded-3xl" />
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1602585491686-ef2b2d3ec08e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+                  alt="Inga-Brittas Havrebollar"
+                  className="relative w-full rounded-3xl shadow-2xl object-cover aspect-[4/3] sm:aspect-[4/3]"
+                />
+                {/* Floating badge */}
+                <div className="absolute -bottom-5 -left-5 sm:-bottom-6 sm:-left-6 bg-amber-400 text-rose-950 rounded-2xl px-4 py-3 shadow-xl font-black text-xs sm:text-sm uppercase tracking-wide">
+                  ✓ Äggfria &nbsp;✓ Laktosfria
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
 
+      {/* ── Marquee strip ─────────────────────────────── */}
+      <div className="bg-rose-800 py-4 overflow-hidden">
+        <div className="flex gap-8 whitespace-nowrap animate-[marquee_20s_linear_infinite]"
+          style={{ animation: 'marquee 20s linear infinite' }}>
+          {Array(6).fill(null).map((_, i) => (
+            <span key={i} className="text-white text-sm sm:text-base font-bold uppercase tracking-widest shrink-0">
+              Inga-Brittas Havrebollar &nbsp;·&nbsp; Handgjorda sedan 1976 &nbsp;·&nbsp; Fabriks Färska &nbsp;·&nbsp;
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+      `}</style>
+
       {/* ── Om Oss ────────────────────────────────────── */}
-      <section id="om-oss" className="bg-rose-50 py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-y border-rose-100">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-10 sm:mb-12">
-            <h2 className="text-3xl sm:text-4xl text-rose-950 mb-3">Om Oss</h2>
-            <div className="w-16 h-1 bg-rose-800 mx-auto" />
-          </div>
+      <section id="om-oss" className="bg-rose-950 py-20 sm:py-28 px-5 sm:px-8 relative overflow-hidden">
+        {/* Decorative text watermark */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12rem] sm:text-[18rem] font-black text-white/[0.03] select-none pointer-events-none leading-none"
+          style={{ fontFamily: "'Playfair Display', serif" }}>
+          1976
+        </div>
 
-          <div className="space-y-5 text-center text-stone-700 text-base sm:text-lg leading-relaxed">
-            <p>
-              Inga-Brittas Havrebollar tillverkar havrebollar och inget annat — havrebollarna
-              blir tillverkade efter gammalt recept. De är ljuvliga, himmelska.
-            </p>
-            <p>
-              Eller som min far brukar säga, när något är riktigt gott:{' '}
-              <em className="text-rose-900 font-medium">
-                &ldquo;De smälter som choklad i munnen.&rdquo;
-              </em>
-            </p>
-            <p>
-              IngaBrittas Havrebollar har i mer än 45 år tillverkat de klassiska havrebollarna
-              enligt samma tidlösa recept.
-            </p>
+        <div className="relative max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
-            <div className="w-12 h-px bg-rose-300 mx-auto" />
-
-            <p>
-              Bara havrebollar och inget annat. Just därför är vi välkända för det godaste samt
-              smarrigaste fika-tillbehöret som du kan få till en kopp kaffe i hela Stockholm.
-            </p>
-
-            <div className="w-12 h-px bg-rose-300 mx-auto" />
-
-            {/* Social media quote */}
-            <div className="bg-white rounded-2xl px-6 sm:px-8 py-6 border border-rose-200 shadow-sm text-left">
-              <p className="text-xs sm:text-sm font-semibold text-rose-800 uppercase tracking-widest mb-3">
-                Ur sociala medier
+            <div className="space-y-6 sm:space-y-8">
+              <div>
+                <p className="text-amber-400 text-xs sm:text-sm font-bold uppercase tracking-[0.3em] mb-4">Om oss</p>
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight"
+                  style={{ fontFamily: "'Playfair Display', serif" }}>
+                  Bara havrebollar.<br />
+                  <span className="text-amber-400">Inget annat.</span>
+                </h2>
+              </div>
+              <p className="text-rose-200 text-base sm:text-lg leading-relaxed">
+                Inga-Brittas Havrebollar tillverkar havrebollar och inget annat — gjorda
+                efter ett gammalt recept som stått sig i generationer.
               </p>
-              <p className="text-stone-700 text-sm sm:text-base leading-relaxed">
-                För några år sedan hade vi ovanan att då och då gå förbi butiken och köpa en
-                låda havrebollar. Då fanns det bara lådor om 16 bollar och jag kan säga att en
-                familj på fem personer blir mätta på gränsen till illamående om de knör i sig
-                alla 16 till eftermiddagsfikat.
+              <p className="text-rose-200 text-base sm:text-lg leading-relaxed">
+                IngaBrittas Havrebollar har i mer än 45 år tillverkat de klassiska
+                havrebollarna enligt samma tidlösa recept. Just därför är vi välkända för
+                det godaste fika-tillbehöret till en kopp kaffe i hela Stockholm.
               </p>
-              <p className="text-stone-700 text-sm sm:text-base leading-relaxed mt-3">
+
+              {/* Pull quote */}
+              <div className="border-l-4 border-amber-400 pl-5 sm:pl-6 py-2">
+                <p className="text-3xl sm:text-4xl lg:text-5xl text-white leading-snug"
+                  style={{ fontFamily: "'Great Vibes', cursive" }}>
+                  &ldquo;De smälter som choklad i munnen&rdquo;
+                </p>
+                <p className="text-amber-400 text-sm font-semibold mt-3">— Ur sociala medier</p>
+              </div>
+            </div>
+
+            {/* Social media story card */}
+            <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-3xl p-7 sm:p-10 space-y-5">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 bg-rose-700 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">IB</span>
+                </div>
+                <div>
+                  <p className="text-white font-bold text-sm">@ingabrittas</p>
+                  <p className="text-rose-400 text-xs">Sociala medier</p>
+                </div>
+              </div>
+              <p className="text-rose-100 text-base sm:text-lg leading-relaxed">
+                För några år sedan hade vi ovanan att då och då gå förbi butiken och köpa
+                en låda havrebollar. Då fanns det bara lådor om 16 bollar och jag kan säga
+                att en familj på fem personer blir mätta på gränsen till illamående om de
+                knör i sig alla 16 till eftermiddagsfikat.
+              </p>
+              <p className="text-rose-100 text-base sm:text-lg leading-relaxed">
                 Promenaden hem blev något lite ljusare, varmare och trevligare med de där
                 havrebollarna i kistan.
               </p>
+              <div className="flex gap-1 pt-2">
+                {['❤️', '❤️', '❤️', '❤️', '❤️'].map((e, i) => <span key={i} className="text-lg">{e}</span>)}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── Fabriks Färska ────────────────────────────── */}
-      <section className="bg-rose-900 py-14 sm:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center text-white space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-wide uppercase">
-            Fabriks Färska Havrebollar
-          </h2>
-          <div className="w-16 h-0.5 bg-amber-400 mx-auto" />
-          <p className="text-rose-100 text-base sm:text-lg leading-relaxed">
-            Från ett lokalt belägen havrebollsfabrik kan du enkelt få ett komplement till dina
-            bakelser när du planerar ditt event eller kalas vid tillfällen då någon eller något
-            ska firas. Med dessa smaskigt goda havrebollarna blir din fest till ett minne som
-            aldrig kommer att glömmas bort varken av morfar eller mormor eller barnen som
-            varit med på festen.
-          </p>
+      <section className="bg-amber-400 py-16 sm:py-20 px-5 sm:px-8">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
+          <div className="text-6xl sm:text-7xl shrink-0">🏭</div>
+          <div className="text-center sm:text-left">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-rose-950 uppercase tracking-wide leading-tight mb-3">
+              Fabriks Färska Havrebollar
+            </h2>
+            <p className="text-rose-900 text-base sm:text-lg leading-relaxed max-w-2xl">
+              Från ett lokalt belägen havrebollsfabrik kan du enkelt få ett komplement till
+              dina bakelser vid events och kalas. Med dessa smaskigt goda havrebollar blir
+              din fest till ett minne som aldrig glöms bort.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* ── Tillverkning / Process ─────────────────────── */}
-      <section id="produkter" className="bg-stone-50 py-14 sm:py-20 px-4 sm:px-6 lg:px-8">
+      {/* ── Tillverkning ──────────────────────────────── */}
+      <section id="produkter" className="bg-stone-100 py-20 sm:py-28 px-5 sm:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 sm:mb-14">
-            <h2 className="text-3xl sm:text-4xl text-rose-950 mb-3">Så gör vi dem</h2>
-            <div className="w-16 h-1 bg-rose-800 mx-auto mb-4" />
-            <p className="text-stone-600 text-base sm:text-lg">Handgjorda med passion, rullade med precision</p>
+          <div className="text-center mb-14 sm:mb-20">
+            <p className="text-rose-700 text-xs sm:text-sm font-bold uppercase tracking-[0.3em] mb-3">Hur vi gör dem</p>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-rose-950 mb-4"
+              style={{ fontFamily: "'Playfair Display', serif" }}>
+              Handgjorda med kärlek
+            </h2>
+            <div className="w-16 h-1 bg-rose-800 mx-auto" />
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {/* Step 1 */}
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-rose-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 bg-rose-800 text-white rounded-full flex items-center justify-center font-bold text-lg mb-5">
-                1
+          <div className="grid sm:grid-cols-3 gap-6 lg:gap-8">
+            {[
+              {
+                n: '01', title: 'Blandarvisp',
+                text: 'I den stora skålen blandas degen och vispas upp till en härlig slät och fluffig smet utav det anrika receptet som sedan 1976 innehåller samma ingredienser som Ingabritta ursprungligen skapade.',
+                badge: '✓ Äggfria · ✓ Nötfria · ✓ Laktosfria · ✓ Mjölkproteinfria',
+              },
+              {
+                n: '02', title: 'Rullas i kokos',
+                text: 'De färdiga bollarna rullas för hand på en plåt täckt av kokos innan de manuellt placeras i sina kartonger. Varje boll — gjord med samma omsorg som alltid.',
+                badge: null,
+              },
+              {
+                n: '03', title: 'Förpackning',
+                text: 'De färdigt rullade havrebollarna placeras i kartongerna i storlekarna 12 eller 25 pack och levereras färska ut till kund.',
+                badge: null,
+              },
+            ].map(({ n, title, text, badge }) => (
+              <div key={n}
+                className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border border-stone-200">
+                <div className="bg-rose-950 px-7 py-5 flex items-center justify-between">
+                  <span className="text-5xl sm:text-6xl font-black text-white/20 leading-none"
+                    style={{ fontFamily: "'Playfair Display', serif" }}>{n}</span>
+                  <div className="w-8 h-8 rounded-full border-2 border-white/30 group-hover:border-amber-400 transition-colors" />
+                </div>
+                <div className="p-7">
+                  <h3 className="text-xl sm:text-2xl font-bold text-rose-950 mb-3"
+                    style={{ fontFamily: "'Playfair Display', serif" }}>{title}</h3>
+                  <p className="text-stone-500 text-sm sm:text-base leading-relaxed mb-4">{text}</p>
+                  {badge && (
+                    <p className="text-xs font-bold text-rose-700 bg-rose-50 rounded-xl px-4 py-3 border border-rose-100">{badge}</p>
+                  )}
+                </div>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-rose-950 mb-3">Blandarvisp</h3>
-              <p className="text-stone-600 text-sm sm:text-base leading-relaxed mb-5">
-                I den stora skålen blandas degen och vispas sedan upp till att bli en härlig slät
-                och fluffig smet utav det anrika receptet som sedan år 1976 innehåller samma
-                ingredienser som från början introducerades av Ingabritta och fick namnet
-                Ingabrittas Havrebollar.
-              </p>
-              <div className="bg-rose-50 rounded-lg p-3 border border-rose-100 text-sm text-rose-900 font-medium space-y-1">
-                <p>&#10003; Äggfria &nbsp; &#10003; Nötfria</p>
-                <p>&#10003; Laktosfria &nbsp; &#10003; Mjölkproteinfria</p>
-              </div>
-            </div>
-
-            {/* Step 2 */}
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-rose-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 bg-rose-800 text-white rounded-full flex items-center justify-center font-bold text-lg mb-5">
-                2
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-rose-950 mb-3">Rullas i kokos</h3>
-              <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-                De färdiga bollarna av smeten rullas för hand på en plåt täckt av kokos
-                innan de placeras manuellt i sina kartonger.
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-rose-100 shadow-sm hover:shadow-md transition-shadow sm:col-span-2 lg:col-span-1">
-              <div className="w-10 h-10 bg-rose-800 text-white rounded-full flex items-center justify-center font-bold text-lg mb-5">
-                3
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-rose-950 mb-3">Förpackningarna</h3>
-              <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-                De färdigt rullade havrebollarna placeras sedan i kartongerna i olika
-                storlekar — 12 eller 25 pack — för att levereras ut till kund.
-              </p>
-            </div>
+            ))}
           </div>
 
           {/* Innehållsdeklaration */}
-          <div className="mt-10 sm:mt-14 max-w-xl mx-auto bg-white rounded-2xl px-6 sm:px-10 py-8 border border-stone-200 shadow-sm text-center">
-            <h3 className="text-xl sm:text-2xl font-bold text-rose-950 mb-4">Innehållsdeklaration</h3>
-            <div className="w-12 h-px bg-rose-300 mx-auto mb-4" />
-            <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-              Ingredienser: Havregryn, vegetabiliskt olja (palm SG, raps, kokos), socker,
-              glykos, kokosraps, vatten, kakao, aromer, salt, emulgeringsmedel
-              (E&nbsp;471, E&nbsp;475, E&nbsp;322), surhetsreglerande medel (E330),
-              vitaminer A och D.
-            </p>
-            <p className="mt-4 text-stone-700 font-semibold text-sm sm:text-base">Nettovikt 825 gram</p>
-            <p className="text-stone-500 text-sm">Förvaras svalt.</p>
+          <div className="mt-14 sm:mt-20 max-w-2xl mx-auto bg-white border border-stone-200 rounded-3xl overflow-hidden shadow-sm">
+            <div className="bg-rose-950 px-8 py-5">
+              <h3 className="text-xl sm:text-2xl font-bold text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
+                Innehållsdeklaration
+              </h3>
+            </div>
+            <div className="px-8 py-7 text-center space-y-3">
+              <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
+                Ingredienser: Havregryn, vegetabiliskt olja (palm SG, raps, kokos), socker,
+                glykos, kokosraps, vatten, kakao, aromer, salt, emulgeringsmedel
+                (E&nbsp;471, E&nbsp;475, E&nbsp;322), surhetsreglerande medel (E330),
+                vitaminer A och D.
+              </p>
+              <div className="flex justify-center gap-6 pt-2">
+                <div className="text-center">
+                  <p className="text-2xl sm:text-3xl font-black text-rose-950">825 g</p>
+                  <p className="text-xs text-stone-400 font-semibold uppercase tracking-wide">Nettovikt</p>
+                </div>
+                <div className="w-px bg-stone-200" />
+                <div className="text-center">
+                  <p className="text-2xl sm:text-3xl font-black text-rose-950">Svalt</p>
+                  <p className="text-xs text-stone-400 font-semibold uppercase tracking-wide">Förvaras</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── Beställningsinformation ────────────────────── */}
-      <section className="bg-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-y border-stone-200">
+      {/* ── Priser ────────────────────────────────────── */}
+      <section className="bg-white py-20 sm:py-28 px-5 sm:px-8">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10 sm:mb-14">
-            <h2 className="text-3xl sm:text-4xl text-rose-950 mb-3">Beställningsinformation</h2>
-            <div className="w-16 h-1 bg-rose-800 mx-auto mb-4" />
-            <p className="text-stone-600 text-base sm:text-lg">Välj den förpackning som passar er bäst</p>
+          <div className="text-center mb-14 sm:mb-20">
+            <p className="text-rose-700 text-xs sm:text-sm font-bold uppercase tracking-[0.3em] mb-3">Beställning</p>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-rose-950 mb-4"
+              style={{ fontFamily: "'Playfair Display', serif" }}>
+              Välj ditt pack
+            </h2>
+            <div className="w-16 h-1 bg-rose-800 mx-auto" />
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-6 lg:gap-8">
+          <div className="grid sm:grid-cols-2 gap-6 lg:gap-8 items-start">
+
             {/* 12-pack */}
-            <div className="bg-stone-50 rounded-3xl p-6 sm:p-8 border-2 border-stone-200 shadow-md">
-              <div className="text-center mb-6">
-                <span className="inline-block bg-rose-800 text-white px-5 py-2 rounded-full font-bold text-sm sm:text-base mb-3">
-                  12-PACK
-                </span>
-                <p className="text-stone-500 text-sm">Förpackning</p>
+            <div className="border-2 border-stone-200 rounded-3xl overflow-hidden">
+              <div className="px-8 pt-8 pb-6 border-b border-stone-100">
+                <span className="text-xs font-black uppercase tracking-widest text-stone-400">Förpackning</span>
+                <div className="flex items-end gap-3 mt-1">
+                  <h3 className="text-4xl sm:text-5xl font-black text-rose-950"
+                    style={{ fontFamily: "'Playfair Display', serif" }}>12-pack</h3>
+                </div>
               </div>
-              <div className="space-y-4">
-                <div className="bg-white rounded-xl p-4 sm:p-5 border-2 border-rose-200">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Volympris (200+ kartong)</p>
-                  <p className="text-4xl sm:text-5xl text-rose-950 font-bold leading-none">31 kr</p>
-                  <p className="text-xs text-stone-500 mt-1">per kartong</p>
-                </div>
-                <div className="bg-white rounded-xl p-4 sm:p-5 border border-stone-200">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Standardpris (under 200)</p>
-                  <p className="text-4xl sm:text-5xl text-rose-950 font-bold leading-none">33 kr</p>
-                  <p className="text-xs text-stone-500 mt-1">per kartong</p>
-                </div>
-                <div className="bg-rose-900 text-white rounded-xl p-4 sm:p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wide mb-1">Enstaka förpackning</p>
-                  <p className="text-4xl sm:text-5xl font-bold leading-none">65 kr</p>
-                  <p className="text-xs mt-1 text-rose-200">styck</p>
-                </div>
-                <div className="border-t border-stone-200 pt-4 flex items-center gap-2 text-rose-950">
-                  <Package className="w-5 h-5 shrink-0" />
+              <div className="px-8 py-6 space-y-3">
+                {[
+                  { label: 'Volympris (200+ kartong)', price: '31 kr', sub: 'per kartong', highlight: false },
+                  { label: 'Standardpris (under 200)', price: '33 kr', sub: 'per kartong', highlight: false },
+                  { label: 'Enstaka förpackning', price: '65 kr', sub: 'styck', highlight: true },
+                ].map(({ label, price, sub, highlight }) => (
+                  <div key={label}
+                    className={`rounded-2xl px-5 py-4 flex items-center justify-between ${highlight ? 'bg-rose-950 text-white' : 'bg-stone-50 border border-stone-200'}`}>
+                    <div>
+                      <p className={`text-xs font-semibold uppercase tracking-wide ${highlight ? 'text-rose-300' : 'text-stone-400'}`}>{label}</p>
+                      <p className={`text-xs mt-0.5 ${highlight ? 'text-rose-300' : 'text-stone-400'}`}>{sub}</p>
+                    </div>
+                    <p className={`text-3xl sm:text-4xl font-black ${highlight ? 'text-white' : 'text-rose-950'}`}
+                      style={{ fontFamily: "'Playfair Display', serif" }}>{price}</p>
+                  </div>
+                ))}
+                <div className="rounded-2xl px-5 py-4 bg-stone-50 border border-stone-200 flex items-center gap-3">
+                  <Package className="w-5 h-5 text-rose-800 shrink-0" />
                   <div>
-                    <p className="text-xs text-stone-500 font-semibold uppercase tracking-wide">Minsta beställning</p>
-                    <p className="text-lg sm:text-xl font-bold">100 kartonger</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-stone-400">Minsta beställning</p>
+                    <p className="text-lg font-black text-rose-950">100 kartonger</p>
                   </div>
                 </div>
-                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
-                  <Info className="w-4 h-4 shrink-0 mt-0.5 text-amber-700" />
-                  <p className="text-xs sm:text-sm text-stone-700">
-                    <span className="font-semibold">Tips:</span> Ni väljer själv säljpris. Populärt bland fotbollslag!
-                  </p>
+                <div className="flex items-start gap-3 px-5 py-4 bg-amber-50 border border-amber-200 rounded-2xl">
+                  <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <p className="text-sm text-stone-600"><strong>Tips:</strong> Ni väljer själv säljpris. Populärt bland fotbollslag!</p>
                 </div>
               </div>
             </div>
 
-            {/* 25-pack */}
-            <div className="bg-rose-900 rounded-3xl p-6 sm:p-8 text-white border-2 border-rose-700 shadow-xl">
-              <div className="text-center mb-6">
-                <span className="inline-block bg-amber-400 text-rose-950 px-5 py-2 rounded-full font-black text-sm sm:text-base mb-3 shadow">
-                  POPULÄRAST
-                </span>
-                <p className="text-xl sm:text-2xl font-bold">25-PACK</p>
-                <p className="text-rose-300 text-sm">Förpackning</p>
+            {/* 25-pack — elevated */}
+            <div className="bg-rose-950 rounded-3xl overflow-hidden shadow-2xl sm:scale-[1.03] sm:-mt-4">
+              <div className="px-8 pt-8 pb-6 border-b border-white/10">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-black uppercase tracking-widest text-rose-400">Förpackning</span>
+                  <span className="bg-amber-400 text-rose-950 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wide">
+                    Populärast
+                  </span>
+                </div>
+                <h3 className="text-4xl sm:text-5xl font-black text-white"
+                  style={{ fontFamily: "'Playfair Display', serif" }}>25-pack</h3>
               </div>
-              <div className="space-y-4">
-                <div className="bg-white text-rose-950 rounded-xl p-4 sm:p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Volympris (200+ kartong)</p>
-                  <p className="text-4xl sm:text-5xl font-bold leading-none">52 kr</p>
-                  <p className="text-xs text-stone-500 mt-1">per kartong</p>
-                </div>
-                <div className="bg-white/90 text-rose-950 rounded-xl p-4 sm:p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-stone-500 mb-1">Standardpris (under 200)</p>
-                  <p className="text-4xl sm:text-5xl font-bold leading-none">55 kr</p>
-                  <p className="text-xs text-stone-500 mt-1">per kartong</p>
-                </div>
-                <div className="bg-amber-400 text-rose-950 rounded-xl p-4 sm:p-5 border border-amber-500">
-                  <p className="text-xs font-semibold uppercase tracking-wide mb-1">Rekommenderat säljpris</p>
-                  <p className="text-4xl sm:text-5xl font-black leading-none">110 kr</p>
-                  <p className="text-xs mt-1">per kartong</p>
-                </div>
-                <div className="border-t border-white/20 pt-4 flex items-center gap-2">
-                  <Package className="w-5 h-5 shrink-0" />
+              <div className="px-8 py-6 space-y-3">
+                {[
+                  { label: 'Volympris (200+ kartong)', price: '52 kr', sub: 'per kartong', highlight: false },
+                  { label: 'Standardpris (under 200)', price: '55 kr', sub: 'per kartong', highlight: false },
+                  { label: 'Rekommenderat säljpris', price: '110 kr', sub: 'per kartong', highlight: true },
+                ].map(({ label, price, sub, highlight }) => (
+                  <div key={label}
+                    className={`rounded-2xl px-5 py-4 flex items-center justify-between ${highlight ? 'bg-amber-400' : 'bg-white/10 border border-white/10'}`}>
+                    <div>
+                      <p className={`text-xs font-semibold uppercase tracking-wide ${highlight ? 'text-rose-900' : 'text-rose-300'}`}>{label}</p>
+                      <p className={`text-xs mt-0.5 ${highlight ? 'text-rose-800' : 'text-rose-400'}`}>{sub}</p>
+                    </div>
+                    <p className={`text-3xl sm:text-4xl font-black ${highlight ? 'text-rose-950' : 'text-white'}`}
+                      style={{ fontFamily: "'Playfair Display', serif" }}>{price}</p>
+                  </div>
+                ))}
+                <div className="rounded-2xl px-5 py-4 bg-white/10 border border-white/10 flex items-center gap-3">
+                  <Package className="w-5 h-5 text-rose-300 shrink-0" />
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-rose-300">Minsta beställning</p>
-                    <p className="text-lg sm:text-xl font-bold">50 kartonger</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-rose-400">Minsta beställning</p>
+                    <p className="text-lg font-black text-white">50 kartonger</p>
                   </div>
                 </div>
-                <div className="bg-white/10 border border-white/20 rounded-xl p-4 flex items-start gap-3">
-                  <Info className="w-4 h-4 shrink-0 mt-0.5" />
-                  <p className="text-xs sm:text-sm text-rose-100">
-                    <span className="font-bold">Tips:</span> Bra marginal med vårt rekommenderade pris på 110 kr!
-                  </p>
+                <div className="flex items-start gap-3 px-5 py-4 bg-white/10 border border-white/10 rounded-2xl">
+                  <Info className="w-4 h-4 text-rose-300 shrink-0 mt-0.5" />
+                  <p className="text-sm text-rose-200"><strong className="text-white">Tips:</strong> Bra marginal med rekommenderat pris på 110 kr!</p>
                 </div>
               </div>
             </div>
@@ -392,82 +439,45 @@ export default function Home() {
       </section>
 
       {/* ── Tipsar ────────────────────────────────────── */}
-      <section id="tipsar" className="bg-stone-50 py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-stone-200">
-        <div className="max-w-2xl mx-auto text-center space-y-5 sm:space-y-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-rose-950" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Inga-Brittas Havrebollar Tipsar!
-          </h2>
-          <div className="w-16 h-1 bg-rose-800 mx-auto" />
-          <h3 className="text-xl sm:text-2xl font-bold uppercase text-stone-900 leading-snug">
-            Tjäna pengar till<br />skolkassan eller laget
-          </h3>
-          <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-            Sälj havrebollar för klubben, klassen eller laget — ni sätter priset och
-            behåller vinsten. Kontakta oss via beställningsformuläret nedan.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-            <a
-              href="#contact"
-              className="bg-rose-800 hover:bg-rose-900 text-white font-semibold px-6 py-3 rounded-full text-sm sm:text-base transition-all hover:scale-105 shadow-md"
-            >
-              Kontakta oss
-            </a>
-            <a
-              href="#contact"
-              className="border-2 border-rose-800 text-rose-900 hover:bg-rose-800 hover:text-white font-semibold px-6 py-3 rounded-full text-sm sm:text-base transition-all"
-            >
-              Länk till skolförsäljning
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Historia / Stats ──────────────────────────── */}
-      <section className="bg-rose-900 py-14 sm:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
+      <section id="tipsar" className="relative bg-stone-100 py-20 sm:py-28 px-5 sm:px-8 overflow-hidden border-y border-stone-200">
+        <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-rose-50 pointer-events-none hidden lg:block" />
+        <div className="relative max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            <div className="text-white space-y-6">
+            <div className="space-y-6 sm:space-y-8">
               <div>
-                <p className="text-amber-300 text-xs sm:text-sm font-bold uppercase tracking-widest mb-2">Vår Historia</p>
-                <h2 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
-                  Från Hägersten<br />till hela Stockholm
+                <p className="text-rose-700 text-xs sm:text-sm font-bold uppercase tracking-[0.3em] mb-4">Fundraising</p>
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-rose-950 leading-tight"
+                  style={{ fontFamily: "'Playfair Display', serif" }}>
+                  Tjäna pengar<br />
+                  <span className="text-rose-700">till laget</span>
                 </h2>
-                <div className="w-16 h-1 bg-amber-400" />
               </div>
-              <div className="space-y-4 text-rose-100 text-sm sm:text-base leading-relaxed">
-                <p>
-                  Det började 1976 när Ingabritta skapade sitt havrebollsrecept i ett litet kök
-                  i Hägersten. Receptet blev snabbt känt för sin unika smak och handgjorda kvalitet.
-                </p>
-                <p>
-                  Idag, över 45 år senare, använder vi fortfarande samma recept och samma
-                  kärleksfulla metod. Varje havreboll görs för hand — precis som alltid.
-                </p>
-              </div>
-              <div className="bg-white/10 rounded-2xl p-5 sm:p-6 border-l-4 border-amber-400">
-                <p
-                  className="text-xl sm:text-2xl italic text-white leading-relaxed"
-                  style={{ fontFamily: "'Great Vibes', cursive" }}
-                >
-                  &ldquo;En god havreboll kan ljusa upp vilken dag som helst&rdquo;
-                </p>
-                <p className="text-amber-300 mt-3 text-sm font-semibold">— Ingabritta</p>
+              <p className="text-stone-600 text-base sm:text-lg leading-relaxed max-w-md">
+                Sälj Inga-Brittas havrebollar för skolkassan eller laget. Ni sätter
+                priset själva och behåller vinsten. Enkelt, gott och lönsamt!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a href="#contact"
+                  className="group flex items-center justify-center gap-2 bg-rose-800 hover:bg-rose-900 text-white font-bold px-8 py-4 rounded-full text-base transition-all hover:scale-105 shadow-xl shadow-rose-200">
+                  Kom igång <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a href="#contact"
+                  className="flex items-center justify-center border-2 border-rose-800 text-rose-900 hover:bg-rose-800 hover:text-white font-bold px-8 py-4 rounded-full text-base transition-all">
+                  Skolförsäljning
+                </a>
               </div>
             </div>
-
-            <div className="grid grid-cols-2 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 gap-4">
               {[
-                { stat: '45+', label: 'År av tradition' },
-                { stat: '100%', label: 'Handgjorda' },
-                { stat: '12/25', label: 'Pack-storlekar' },
-                { stat: '∞', label: 'Kärlek' },
-              ].map(({ stat, label }) => (
-                <div
-                  key={label}
-                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 sm:p-7 text-center border border-white/20 hover:bg-white/20 transition-colors"
-                >
-                  <div className="text-3xl sm:text-5xl text-white font-black mb-2">{stat}</div>
-                  <div className="text-rose-200 text-xs sm:text-sm font-semibold">{label}</div>
+                { icon: '🏆', title: 'Ni sätter priset', text: 'Full kontroll — välj er egen marginal.' },
+                { icon: '📦', title: 'Enkla paket', text: '12 eller 25 pack, perfekt för försäljning.' },
+                { icon: '⚽', title: 'Populärt', text: 'Favorit bland fotbollslag och klasser.' },
+                { icon: '🚀', title: 'Snabb leverans', text: 'Fabriks färska direkt till er.' },
+              ].map(({ icon, title, text }) => (
+                <div key={title} className="bg-white border border-stone-200 rounded-2xl p-5 sm:p-6 hover:shadow-md transition-shadow">
+                  <div className="text-3xl mb-3">{icon}</div>
+                  <p className="font-bold text-rose-950 text-sm sm:text-base mb-1">{title}</p>
+                  <p className="text-stone-500 text-xs sm:text-sm leading-relaxed">{text}</p>
                 </div>
               ))}
             </div>
@@ -476,104 +486,92 @@ export default function Home() {
       </section>
 
       {/* ── Footer ────────────────────────────────────── */}
-      <footer id="contact" className="bg-white border-t-4 border-rose-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
+      <footer id="contact" className="bg-rose-950">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 pt-16 sm:pt-20 pb-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-16 pb-12 border-b border-white/10">
 
             {/* Brand */}
-            <div className="sm:col-span-2 lg:col-span-1">
-              <div className="mb-4">
-                <span className="text-rose-950 font-bold text-2xl sm:text-3xl block" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <div className="sm:col-span-2 lg:col-span-1 space-y-5">
+              <div>
+                <p className="text-white font-bold text-3xl sm:text-4xl" style={{ fontFamily: "'Playfair Display', serif" }}>
                   Inga-Brittas
-                </span>
-                <span className="text-rose-700 text-sm tracking-widest uppercase font-semibold">
-                  Havrebollar
-                </span>
+                </p>
+                <p className="text-rose-400 text-xs tracking-[0.3em] uppercase font-bold">Havrebollar</p>
               </div>
-              <p className="text-stone-500 text-sm sm:text-base leading-relaxed mb-5">
-                Traditionella svenska havrebollar handgjorda med kärlek sedan 1976.
-                Från vår fabrik i Hägersten till ditt hem.
+              <p className="text-rose-300 text-sm sm:text-base leading-relaxed">
+                Handgjorda havrebollar sedan 1976. Från vår fabrik i Hägersten till ditt bord.
               </p>
               <div className="flex gap-3">
-                <a href="#" aria-label="Facebook" className="w-10 h-10 sm:w-11 sm:h-11 bg-rose-800 hover:bg-rose-900 text-white rounded-full flex items-center justify-center transition-all hover:scale-110 shadow">
-                  <FacebookIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                </a>
-                <a href="#" aria-label="Instagram" className="w-10 h-10 sm:w-11 sm:h-11 bg-rose-800 hover:bg-rose-900 text-white rounded-full flex items-center justify-center transition-all hover:scale-110 shadow">
-                  <InstagramIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                </a>
+                {[<FacebookIcon className="w-5 h-5" />, <InstagramIcon className="w-5 h-5" />].map((icon, i) => (
+                  <a key={i} href="#"
+                    className="w-11 h-11 bg-white/10 hover:bg-rose-700 text-white rounded-full flex items-center justify-center transition-all hover:scale-110">
+                    {icon}
+                  </a>
+                ))}
               </div>
             </div>
 
             {/* Contact */}
-            <div>
-              <h3 className="text-lg sm:text-xl font-bold text-rose-950 mb-5">Kontakta Oss</h3>
+            <div className="space-y-5">
+              <h3 className="text-white font-bold text-lg sm:text-xl" style={{ fontFamily: "'Playfair Display', serif" }}>
+                Kontakt
+              </h3>
               <div className="space-y-4">
-                <a href="mailto:info@ingabrittas.se" className="flex items-start gap-3 group">
-                  <div className="w-9 h-9 bg-rose-100 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-rose-200 transition-colors">
-                    <Mail className="w-4 h-4 text-rose-800" />
+                {[
+                  { Icon: Mail,   label: 'Epost',  value: 'info@ingabrittas.se', href: 'mailto:info@ingabrittas.se' },
+                  { Icon: Phone,  label: 'Tel',    value: '0736-403184',         href: 'tel:0736403184' },
+                ].map(({ Icon, label, value, href }) => (
+                  <a key={label} href={href}
+                    className="flex items-center gap-4 group">
+                    <div className="w-10 h-10 bg-white/10 group-hover:bg-rose-700 rounded-xl flex items-center justify-center shrink-0 transition-colors">
+                      <Icon className="w-4 h-4 text-rose-300 group-hover:text-white" />
+                    </div>
+                    <div>
+                      <p className="text-rose-400 text-xs uppercase tracking-wide">{label}</p>
+                      <p className="text-white text-sm font-semibold group-hover:text-amber-400 transition-colors">{value}</p>
+                    </div>
+                  </a>
+                ))}
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center shrink-0">
+                    <MapPin className="w-4 h-4 text-rose-300" />
                   </div>
                   <div>
-                    <p className="text-xs text-stone-400 uppercase tracking-wide">Epost</p>
-                    <p className="text-stone-800 text-sm font-semibold group-hover:text-rose-800 transition-colors">
-                      info@ingabrittas.se
-                    </p>
-                  </div>
-                </a>
-                <a href="tel:0736403184" className="flex items-start gap-3 group">
-                  <div className="w-9 h-9 bg-rose-100 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-rose-200 transition-colors">
-                    <Phone className="w-4 h-4 text-rose-800" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-stone-400 uppercase tracking-wide">Tel</p>
-                    <p className="text-stone-800 text-sm font-semibold group-hover:text-rose-800 transition-colors">
-                      0736-403184
-                    </p>
-                  </div>
-                </a>
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 bg-rose-100 rounded-lg flex items-center justify-center shrink-0">
-                    <MapPin className="w-4 h-4 text-rose-800" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-stone-400 uppercase tracking-wide">Adress</p>
-                    <p className="text-stone-800 text-sm font-semibold">Boktryckarvägen 36B</p>
-                    <p className="text-stone-500 text-sm">129 33 Hägersten</p>
+                    <p className="text-rose-400 text-xs uppercase tracking-wide">Adress</p>
+                    <p className="text-white text-sm font-semibold">Boktryckarvägen 36B</p>
+                    <p className="text-rose-300 text-sm">129 33 Hägersten</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Hours */}
-            <div>
-              <h3 className="text-lg sm:text-xl font-bold text-rose-950 mb-5">Öppettider</h3>
-              <div className="space-y-2.5">
+            <div className="space-y-5">
+              <h3 className="text-white font-bold text-lg sm:text-xl" style={{ fontFamily: "'Playfair Display', serif" }}>
+                Öppettider
+              </h3>
+              <div className="space-y-3">
                 {[
-                  { day: 'Mån–Fre', hours: '08.00–14.00', closed: false },
-                  { day: 'Lördag',  hours: 'Stängt',      closed: true },
-                  { day: 'Söndag',  hours: 'Stängt',      closed: true },
-                ].map(({ day, hours, closed }) => (
-                  <div key={day} className="flex justify-between items-center pb-2.5 border-b border-stone-100">
-                    <span className="text-stone-800 text-sm font-semibold">{day}</span>
-                    <span className={`text-sm font-medium ${closed ? 'text-rose-700' : 'text-stone-500'}`}>
-                      {hours}
-                    </span>
+                  { day: 'Mån–Fre', hours: '08.00–14.00', open: true },
+                  { day: 'Lördag',  hours: 'Stängt',      open: false },
+                  { day: 'Söndag',  hours: 'Stängt',      open: false },
+                ].map(({ day, hours, open }) => (
+                  <div key={day} className="flex justify-between items-center pb-3 border-b border-white/10">
+                    <span className="text-rose-200 text-sm font-semibold">{day}</span>
+                    <span className={`text-sm font-bold ${open ? 'text-amber-400' : 'text-rose-600'}`}>{hours}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Bottom bar */}
-        <div className="bg-rose-950 py-4 sm:py-5 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 text-rose-200 text-xs sm:text-sm">
+          {/* Bottom bar */}
+          <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-rose-500 text-xs sm:text-sm">
             <p>&copy; 2026 Inga-Brittas Havrebollar. Alla rättigheter förbehållna.</p>
-            <div className="flex gap-4 sm:gap-6">
-              <a href="#" className="hover:text-white transition-colors">Integritetspolicy</a>
-              <span className="text-rose-800">•</span>
-              <a href="#" className="hover:text-white transition-colors">Villkor</a>
-              <span className="text-rose-800">•</span>
-              <a href="#" className="hover:text-white transition-colors">Cookies</a>
+            <div className="flex gap-5">
+              {['Integritetspolicy', 'Villkor', 'Cookies'].map((t, i) => (
+                <a key={t} href="#" className="hover:text-white transition-colors">{t}</a>
+              ))}
             </div>
           </div>
         </div>
