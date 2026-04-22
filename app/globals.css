@@ -1,22 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Merriweather:wght@300;400;700&family=Great+Vibes&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #fdf8f2;
+    --foreground: #3d2529;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Merriweather', serif;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Merriweather', serif;
+    font-size: 20px;
 }
 
-h1, h2, h3 {
-  font-family: 'Playfair Display', serif;
+h1,
+h2,
+h3 {
+    font-family: 'Playfair Display', serif;
 }
