@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Menu, X, Phone, Mail, MapPin, Clock } from 'lucide-react';
 
 const C = {
@@ -184,9 +184,37 @@ const label = {
     display: 'block'
 };
 
+function useInView(threshold = 0.12) {
+    const ref = useRef(null);
+    const [inView, setInView] = useState(false);
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(
+            ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect(); } },
+            { threshold }
+        );
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, [threshold]);
+    return [ref, inView];
+}
+
+function reveal(inView, delay = 0, dir = 'up') {
+    const transforms = { up: 'translateY(36px)', left: 'translateX(-36px)', right: 'translateX(36px)', scale: 'scale(0.93)' };
+    return {
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'none' : (transforms[dir] || transforms.up),
+        transition: `opacity 0.75s ease ${delay}s, transform 0.75s ease ${delay}s`,
+    };
+}
+
 export default function Home() {
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState(null);
+    const [aboutRef, aboutInView] = useInView();
+    const [menuRef, menuInView] = useInView();
+    const [contactRef, contactInView] = useInView();
 
     return (
         <div style={{ backgroundColor: C.bg, color: C.text }}>
@@ -218,7 +246,7 @@ export default function Home() {
                             <a
                                 key={href}
                                 href={href}
-                                className="font-semibold tracking-wide transition-opacity hover:opacity-50 whitespace-nowrap"
+                                className="nav-link font-semibold tracking-wide whitespace-nowrap"
                                 style={{
                                     color: C.primary,
                                     fontFamily: "'Playfair Display', serif",
@@ -320,18 +348,14 @@ export default function Home() {
                     <div className="grid md:grid-cols-2 gap-10 lg:gap-20 items-center">
                         {/* Text — always first */}
                         <div className="space-y-5 sm:space-y-6">
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className="h-px w-8 shrink-0"
-                                    style={{ backgroundColor: C.gold }}
-                                />
-                                <p style={label}>
-                                    Sedan 1976 · Hägersten, Stockholm
-                                </p>
+                            <div className="hero-label flex items-center gap-3">
+                                <div className="h-px w-8 shrink-0" style={{ backgroundColor: C.gold }} />
+                                <p style={label}>Sedan 1976 · Hägersten, Stockholm</p>
                             </div>
 
                             <div>
                                 <h1
+                                    className="hero-h1a"
                                     style={{
                                         fontFamily: "'Playfair Display', serif",
                                         fontSize: 'clamp(1rem, 7vw, 2rem)',
@@ -343,6 +367,7 @@ export default function Home() {
                                     Traditionella
                                 </h1>
                                 <h1
+                                    className="hero-h1b"
                                     style={{
                                         fontFamily: "'Great Vibes', cursive",
                                         fontSize: 'clamp(3rem, 9vw, 6rem)',
@@ -354,35 +379,17 @@ export default function Home() {
                                 </h1>
                             </div>
 
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className="h-px flex-1"
-                                    style={{
-                                        backgroundColor: C.gold,
-                                        maxWidth: '60px'
-                                    }}
-                                />
+                            <div className="hero-divider flex items-center gap-3">
+                                <div className="h-px flex-1" style={{ backgroundColor: C.gold, maxWidth: '60px' }} />
                                 <svg width="10" height="10" viewBox="0 0 12 12">
-                                    <polygon
-                                        points="6,0 12,6 6,12 0,6"
-                                        fill={C.gold}
-                                    />
+                                    <polygon points="6,0 12,6 6,12 0,6" fill={C.gold} />
                                 </svg>
-                                <div
-                                    className="h-px flex-1"
-                                    style={{
-                                        backgroundColor: C.gold,
-                                        maxWidth: '60px'
-                                    }}
-                                />
+                                <div className="h-px flex-1" style={{ backgroundColor: C.gold, maxWidth: '60px' }} />
                             </div>
 
                             <p
-                                style={{
-                                    color: C.text,
-                                    fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
-                                    lineHeight: 1.85
-                                }}
+                                className="hero-p"
+                                style={{ color: C.text, fontSize: 'clamp(1rem, 2.2vw, 1.2rem)', lineHeight: 1.85 }}
                             >
                                 Handgjorda med kärlek i mer än 45 år. Gjorda
                                 efter ett gammalt recept. Det godaste
@@ -390,11 +397,10 @@ export default function Home() {
                                 Stockholm.
                             </p>
 
-                            {/* Buttons — stack on xs, side-by-side on sm+ */}
-                            <div className="flex flex-col sm:flex-row gap-3 pt-1">
+                            <div className="hero-btns flex flex-col sm:flex-row gap-3 pt-1">
                                 <a
                                     href="#menu"
-                                    className="text-center px-7 py-3.5 rounded-full font-bold transition-opacity hover:opacity-80"
+                                    className="btn-solid text-center px-7 py-3.5 rounded-full font-bold"
                                     style={{
                                         backgroundColor: C.primary,
                                         color: C.white,
@@ -405,7 +411,7 @@ export default function Home() {
                                 </a>
                                 <a
                                     href="#contact"
-                                    className="text-center px-7 py-3.5 rounded-full font-bold border-2 transition-opacity hover:opacity-70"
+                                    className="btn-outline text-center px-7 py-3.5 rounded-full font-bold border-2"
                                     style={{
                                         borderColor: C.primary,
                                         color: C.primary,
@@ -416,9 +422,8 @@ export default function Home() {
                                 </a>
                             </div>
 
-                            {/* Stats */}
                             <div
-                                className="flex gap-6 sm:gap-10 pt-4 border-t"
+                                className="hero-stats flex gap-6 sm:gap-10 pt-4 border-t"
                                 style={{ borderColor: C.border }}
                             >
                                 {[
@@ -429,25 +434,16 @@ export default function Home() {
                                     <div key={l}>
                                         <p
                                             style={{
-                                                fontFamily:
-                                                    "'Playfair Display', serif",
+                                                fontFamily: "'Playfair Display', serif",
                                                 fontWeight: 900,
-                                                fontSize:
-                                                    'clamp(1.8rem, 4vw, 2.8rem)',
+                                                fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
                                                 color: C.primary,
                                                 lineHeight: 1
                                             }}
                                         >
                                             {n}
                                         </p>
-                                        <p
-                                            style={{
-                                                fontSize:
-                                                    'clamp(0.78rem, 1.5vw, 0.95rem)',
-                                                color: C.light,
-                                                marginTop: '4px'
-                                            }}
-                                        >
+                                        <p style={{ fontSize: 'clamp(0.78rem, 1.5vw, 0.95rem)', color: C.light, marginTop: '4px' }}>
                                             {l}
                                         </p>
                                     </div>
@@ -456,49 +452,27 @@ export default function Home() {
                         </div>
 
                         {/* Image */}
-                        <div className="relative mt-4 md:mt-0">
-                            {/* Offset frame — reduced on mobile */}
+                        <div className="hero-img relative mt-4 md:mt-0">
                             <div
                                 className="absolute -top-3 -right-3 sm:-top-5 sm:-right-5 w-full h-full rounded-2xl border"
-                                style={{
-                                    backgroundColor: C.section,
-                                    borderColor: C.border
-                                }}
+                                style={{ backgroundColor: C.section, borderColor: C.border }}
                             />
                             <img
                                 src="/product.png"
                                 alt="Inga-Brittas Havrebollar"
                                 className="relative w-full rounded-2xl object-cover shadow-xl"
-                                style={{ aspectRatio: '4/3' }}
+                                style={{ aspectRatio: '4/3', transition: 'transform 0.6s ease', cursor: 'default' }}
+                                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
+                                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                             />
-                            {/* Badge */}
                             <div
-                                className="absolute -bottom-3 -left-3 sm:-bottom-5 sm:-left-5 rounded-xl px-3 sm:px-4 py-2 sm:py-3 shadow-lg border"
-                                style={{
-                                    backgroundColor: C.white,
-                                    borderColor: C.border
-                                }}
+                                className="hero-badge absolute -bottom-3 -left-3 sm:-bottom-5 sm:-left-5 rounded-xl px-3 sm:px-4 py-2 sm:py-3 shadow-lg border"
+                                style={{ backgroundColor: C.white, borderColor: C.border }}
                             >
-                                <p
-                                    style={{
-                                        fontSize: '0.65rem',
-                                        fontWeight: 700,
-                                        color: C.light,
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.1em'
-                                    }}
-                                >
+                                <p style={{ fontSize: '0.65rem', fontWeight: 700, color: C.light, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                                     Innehåller ej
                                 </p>
-                                <p
-                                    style={{
-                                        fontSize:
-                                            'clamp(0.78rem, 1.5vw, 0.9rem)',
-                                        fontWeight: 700,
-                                        color: C.deep,
-                                        marginTop: '2px'
-                                    }}
-                                >
+                                <p style={{ fontSize: 'clamp(0.78rem, 1.5vw, 0.9rem)', fontWeight: 700, color: C.deep, marginTop: '2px' }}>
                                     Ägg · Nötter · Laktos
                                 </p>
                             </div>
@@ -535,18 +509,48 @@ export default function Home() {
                         ))}
                 </div>
             </div>
-            <style>{`@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}`}</style>
+            <style>{`
+                @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+                @keyframes fadeUp{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}
+                @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+                @keyframes slideLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+                @keyframes slideRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+                @keyframes badgePulse{0%,100%{box-shadow:0 0 0 0 rgba(196,154,60,0.4)}60%{box-shadow:0 0 0 10px rgba(196,154,60,0)}}
+                @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+                .hero-label{animation:fadeIn 0.6s ease both}
+                .hero-h1a{animation:fadeUp 0.7s ease 0.1s both}
+                .hero-h1b{animation:fadeUp 0.7s ease 0.22s both}
+                .hero-divider{animation:fadeIn 0.6s ease 0.35s both}
+                .hero-p{animation:fadeUp 0.7s ease 0.4s both}
+                .hero-btns{animation:fadeUp 0.7s ease 0.52s both}
+                .hero-stats{animation:fadeUp 0.7s ease 0.65s both}
+                .hero-img{animation:slideRight 0.85s ease 0.25s both}
+                .hero-badge{animation:badgePulse 2.4s ease 1.5s infinite,fadeUp 0.7s ease 0.7s both}
+                .nav-link{position:relative}
+                .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:2px;background:currentColor;border-radius:2px;transition:width 0.3s ease}
+                .nav-link:hover::after{width:100%}
+                .btn-solid{transition:transform 0.2s,box-shadow 0.2s,opacity 0.2s}
+                .btn-solid:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(90,57,61,0.32)}
+                .btn-outline{transition:transform 0.2s,background 0.2s,color 0.2s}
+                .btn-outline:hover{transform:translateY(-3px);background:rgba(90,57,61,0.06)}
+                .contact-card{transition:transform 0.25s,background 0.25s,border-color 0.25s}
+                .contact-card:hover{transform:translateY(-4px);background:rgba(255,255,255,0.15)!important;border-color:rgba(255,255,255,0.3)!important}
+            `}</style>
 
             {/* ── About ──────────────────────────────── */}
             <section
                 id="about"
+                ref={aboutRef}
                 className="py-14 sm:py-20 lg:py-28"
                 style={{ backgroundColor: C.section }}
             >
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid md:grid-cols-2 gap-10 lg:gap-20 items-center">
-                        {/* Image — below text on mobile, left on desktop */}
-                        <div className="relative order-2 md:order-1 mt-8 md:mt-0">
+                        {/* Image */}
+                        <div
+                            className="relative order-2 md:order-1 mt-8 md:mt-0"
+                            style={reveal(aboutInView, 0, 'left')}
+                        >
                             <div
                                 className="absolute -bottom-4 -left-4 w-full h-full rounded-2xl border-2"
                                 style={{ borderColor: C.gold, opacity: 0.28 }}
@@ -555,15 +559,18 @@ export default function Home() {
                                 src="/fabrik.png"
                                 alt="Om Inga-Brittas"
                                 className="relative w-full rounded-2xl object-cover shadow-lg"
-                                style={{ aspectRatio: '4/3' }}
+                                style={{ aspectRatio: '4/3', transition: 'transform 0.6s ease' }}
+                                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
+                                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                             />
                         </div>
 
                         {/* Text */}
                         <div className="space-y-5 order-1 md:order-2">
-                            <p style={label}>Om oss</p>
+                            <p style={{ ...reveal(aboutInView, 0.1, 'right'), ...label }}>Om oss</p>
                             <h2
                                 style={{
+                                    ...reveal(aboutInView, 0.2, 'right'),
                                     fontFamily: "'Playfair Display', serif",
                                     fontSize: 'clamp(2.2rem, 5.5vw, 3.8rem)',
                                     fontWeight: 800,
@@ -573,14 +580,12 @@ export default function Home() {
                             >
                                 Bara havrebollar.
                                 <br />
-                                <span style={{ color: C.primary }}>
-                                    Inget annat.
-                                </span>
+                                <span style={{ color: C.primary }}>Inget annat.</span>
                             </h2>
-                            <Ornament />
-
+                            <div style={reveal(aboutInView, 0.3, 'right')}><Ornament /></div>
                             <p
                                 style={{
+                                    ...reveal(aboutInView, 0.35, 'right'),
                                     color: C.text,
                                     fontSize: 'clamp(1rem, 2vw, 1.15rem)',
                                     lineHeight: 1.85
@@ -594,6 +599,7 @@ export default function Home() {
                             </p>
                             <p
                                 style={{
+                                    ...reveal(aboutInView, 0.45, 'right'),
                                     color: C.text,
                                     fontSize: 'clamp(1rem, 2vw, 1.15rem)',
                                     lineHeight: 1.85
@@ -613,14 +619,13 @@ export default function Home() {
             {/* ── Menu ───────────────────────────────── */}
             <section
                 id="menu"
+                ref={menuRef}
                 className="py-14 sm:py-20 lg:py-28"
                 style={{ backgroundColor: C.bg }}
             >
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-10 sm:mb-14">
-                        <p style={{ ...label, marginBottom: '0.75rem' }}>
-                            Våra produkter
-                        </p>
+                    <div className="text-center mb-10 sm:mb-14" style={reveal(menuInView, 0)}>
+                        <p style={{ ...label, marginBottom: '0.75rem' }}>Våra produkter</p>
                         <h2
                             style={{
                                 fontFamily: "'Playfair Display', serif",
@@ -636,8 +641,9 @@ export default function Home() {
 
                     {/* 1 col → 2 col → 3 col */}
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
-                        {products.map(({ name, desc, price, note, img }) => {
+                        {products.map(({ name, desc, price, note, img }, idx) => {
                             const isSelected = selected === name;
+                            const baseReveal = reveal(menuInView, 0.15 + idx * 0.12, 'up');
                             return (
                                 <div
                                     key={name}
@@ -646,19 +652,17 @@ export default function Home() {
                                     }
                                     className="rounded-2xl overflow-hidden border flex flex-col cursor-pointer"
                                     style={{
+                                        ...baseReveal,
                                         backgroundColor: C.white,
-                                        borderColor: isSelected
-                                            ? C.gold
-                                            : C.border,
+                                        borderColor: isSelected ? C.gold : C.border,
                                         borderWidth: isSelected ? '2px' : '1px',
                                         boxShadow: isSelected
                                             ? `0 0 0 3px ${C.goldLight}40, 0 20px 40px rgba(90,57,61,0.15)`
                                             : '0 2px 8px rgba(90,57,61,0.06)',
-                                        transition:
-                                            'box-shadow 0.25s, border-color 0.25s, transform 0.2s',
-                                        transform: isSelected
-                                            ? 'translateY(-4px)'
-                                            : 'none'
+                                        transition: `opacity 0.75s ease ${0.15 + idx * 0.12}s, transform 0.75s ease ${0.15 + idx * 0.12}s, box-shadow 0.25s, border-color 0.25s`,
+                                        transform: menuInView
+                                            ? (isSelected ? 'translateY(-4px)' : 'translateY(0)')
+                                            : 'translateY(36px)'
                                     }}
                                 >
                                     <div
@@ -788,6 +792,7 @@ export default function Home() {
             {/* ── Contact ────────────────────────────── */}
             <section
                 id="contact"
+                ref={contactRef}
                 className="py-14 sm:py-20 lg:py-28 relative overflow-hidden"
                 style={{ backgroundColor: C.primary }}
             >
@@ -795,17 +800,12 @@ export default function Home() {
                 <div />
 
                 <div className="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <p
-                        style={{
-                            ...label,
-                            color: C.goldLight,
-                            marginBottom: '1rem'
-                        }}
-                    >
+                    <p style={{ ...reveal(contactInView, 0), ...label, color: C.goldLight, marginBottom: '1rem' }}>
                         Kontakt
                     </p>
                     <h2
                         style={{
+                            ...reveal(contactInView, 0.1),
                             fontFamily: "'Playfair Display', serif",
                             fontSize: 'clamp(2.2rem, 5.5vw, 3.8rem)',
                             fontWeight: 800,
@@ -815,7 +815,7 @@ export default function Home() {
                     >
                         Vill du beställa?
                     </h2>
-                    <Ornament light />
+                    <div style={reveal(contactInView, 0.2)}><Ornament light /></div>
                     <p
                         style={{
                             color: 'rgba(255,255,255,0.65)',
@@ -830,10 +830,10 @@ export default function Home() {
                     </p>
 
                     {/* Always stacked on mobile, side-by-side on sm+ */}
-                    <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                    <div className="flex flex-col sm:flex-row gap-4 mb-8" style={reveal(contactInView, 0.3)}>
                         <a
                             href="tel:0736403184"
-                            className="flex items-center gap-4 rounded-xl px-5 sm:px-6 py-5 border flex-1 transition-all hover:opacity-85"
+                            className="contact-card flex items-center gap-4 rounded-xl px-5 sm:px-6 py-5 border flex-1"
                             style={{
                                 backgroundColor: 'rgba(255,255,255,0.09)',
                                 borderColor: 'rgba(255,255,255,0.15)'
@@ -880,7 +880,7 @@ export default function Home() {
 
                         <a
                             href="mailto:info@ingabrittas.se"
-                            className="flex items-center gap-4 rounded-xl px-5 sm:px-6 py-5 border flex-1 transition-all hover:opacity-85"
+                            className="contact-card flex items-center gap-4 rounded-xl px-5 sm:px-6 py-5 border flex-1"
                             style={{
                                 backgroundColor: 'rgba(255,255,255,0.09)',
                                 borderColor: 'rgba(255,255,255,0.15)'
@@ -929,6 +929,7 @@ export default function Home() {
                     <div
                         className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-6"
                         style={{
+                            ...reveal(contactInView, 0.45),
                             color: 'rgba(255,255,255,0.45)',
                             fontSize: 'clamp(0.88rem, 1.8vw, 1rem)'
                         }}
