@@ -17,10 +17,10 @@ const C = {
 };
 
 const nav = [
-    { href: '#home', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#menu', label: 'Menu' },
-    { href: '#contact', label: 'Contact' }
+    { href: '#home', label: 'Hem' },
+    { href: '#about', label: 'Om oss' },
+    { href: '#menu', label: 'Meny' },
+    { href: '#contact', label: 'Kontakt' }
 ];
 
 const products = [
